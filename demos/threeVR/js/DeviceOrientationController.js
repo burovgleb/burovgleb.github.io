@@ -29,9 +29,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 	this.lastPhi = 0;
 	this.lastTheta = 0;
 
-	this.alpha = 0;
-	this.beta = 0;
-	this.gamma = 0;
+	this.ang1 = 0;
+	this.ang2 = 0;
+	this.ang3 = 0;
 
 	// Manual rotate override components
 	var startX = 0, startY = 0,
@@ -256,9 +256,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function ( alpha, beta, gamma, screenOrientation ) {
 
-			this.alpha = alpha;
-			this.beta = beta;
-			this.gamma = gamma;
+			this.ang1 = alpha;
+			this.ang2 = beta;
+			this.ang3 = gamma;
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
