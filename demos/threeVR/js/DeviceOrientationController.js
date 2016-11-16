@@ -324,7 +324,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		var rotQuat = new THREE.Quaternion();
 		var objQuat = new THREE.Quaternion();
 
-		var tmpZ, objZ, realZ;
+		var tmpZ, objZ, realZ, objY, realY;
 
 		var zoomFactor, minZoomFactor = 1; // maxZoomFactor = Infinity
 
@@ -352,15 +352,21 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
+				objY  = rotation.setFromQuaternion( objQuat, 'YXZ' ).y
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
+				realY = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).y;
 
-				/*rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
+				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
-				tmpQuat.multiply( rotQuat );*/
+				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
+
+				objQuat.multiply( rotQuat );
+
+				rotQuat.set( 0, Math.sin( ( realY - objX  ) / 2 ), 0, Math.cos( ( realY - objY ) / 2 ) );
 
 				objQuat.multiply( rotQuat );
 
@@ -436,11 +442,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
-				var rotQuat = new THREE.Quaternion();
+				/*var rotQuat = new THREE.Quaternion();
 				rotQuat.setFromAxisAngle(new THREE.Vector3(0,0,1), this.lastPhi);
 				deviceQuat.multiply( rotQuat );
 				rotQuat.setFromAxisAngle(new THREE.Vector3(0,1,0), this.lastTheta);
-				deviceQuat.multiply( rotQuat );
+				deviceQuat.multiply( rotQuat );*/
 
 				this.object.quaternion.copy( deviceQuat );
 
