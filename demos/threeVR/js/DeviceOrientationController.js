@@ -261,13 +261,13 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var screenTransform = new THREE.Quaternion();
 
-		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
+		//var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation, alphaOffset, betaOffset, gammaOffset ) {
+		return function ( alpha, beta, gamma, screenOrientation, worldTransform ) {
 
-			deviceEuler.set( beta + betaOffset, alpha + alphaOffset, - gamma + gammaOffset, 'YXZ' );
+			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
@@ -276,6 +276,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
 			finalQuaternion.multiply( screenTransform );
+
+			//worldTransform.set( 0, Math.sin( Math.PI / 2 ), 0, Math.cos( minusHalfAngle ) );
 
 			finalQuaternion.multiply( worldTransform );
 
@@ -360,7 +362,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				/*tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
@@ -369,7 +371,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
-				*/
+
+				lastObjQuat.copy(objQuat);
 
 				this.object.quaternion.copy( objQuat );
 
@@ -430,7 +433,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					deviceQuat = createQuaternion( alpha, beta, gamma, orient, this.lastTheta, this.lastPhi, 0);
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient, this.lastObjQuat);
 
 				} else {
 
