@@ -38,6 +38,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 	var startX = 0, startY = 0,
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
+		tmpPhi = 0, tmpTheta = 0,
 	    tmpQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
@@ -222,6 +223,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 		if ( appState === CONTROLLER_STATE.MANUAL_ROTATE ) {
 
 			appState = CONTROLLER_STATE.AUTO; // reset control state
+			this.lastPhi = tmpPhi;
+			this.lastTheta = tmpTheta;
 
 			this.freeze = false;
 
@@ -336,8 +339,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
-				this.lastPhi = this.lastPhi + phi;
-				this.lastTheta = this.lastTheta + theta;
+				tmpPhi = phi;
+				tmpTheta = theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
@@ -407,8 +410,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 		return function () {
 
 			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.lastTheta; // X'
-			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
+			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.lastTheta; // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
