@@ -26,12 +26,14 @@ var DeviceOrientationController = function ( object, domElement ) {
 	this.deviceOrientation = {};
 	this.screenOrientation = window.orientation || 0;
 
+	this.lastPhi = 0;
+	this.lastTheta = 0;
+
 	// Manual rotate override components
 	var startX = 0, startY = 0,
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
 	    tmpQuat = new THREE.Quaternion(),
-		lastPhi = 0, lastTheta = 0,
 		lastObjQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
@@ -274,7 +276,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			//finalQuaternion.multiply( rotQuat );
 
-			minusHalfAngle = - (screenOrientation) / 2;
+			minusHalfAngle = - screenOrientation / 2;
 
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
@@ -350,8 +352,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
-				lastPhi = phi;
-				lastTheta = theta;
+				this.lastPhi = phi;
+				this.lastTheta = theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 

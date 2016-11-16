@@ -177,7 +177,7 @@
 				// Listen for manual rotate interaction
 
 				controls.addEventListener( 'rotatestart', function () {
-					controllerEl.innerText = controls.screenOrientation;//'Manual Rotate';
+					controllerEl.innerText = controls.lastPhi + ' ' + controls.lastTheta;//'Manual Rotate';
 				});
 
 				controls.addEventListener( 'rotateend', function () {
