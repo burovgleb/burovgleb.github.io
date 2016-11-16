@@ -28,6 +28,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 	this.lastPhi = 0;
 	this.lastTheta = 0;
+	this.dAlpha = 0;
+	this.dBeta = 0;
+	this.dGamma = 0;
 	this.lastObjQuat = new THREE.Quaternion();
 
 	this.ang1 = 0;
@@ -39,6 +42,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
 		tmpPhi = 0, tmpTheta = 0,
+		tmpAlpha = 0, tmpBeta = 0, tmpGamma = 0,
 	    tmpQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
@@ -226,6 +230,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 			this.lastPhi += tmpPhi;
 			this.lastTheta += tmpTheta;
 
+			this.dAlpha += tmpAlpha;
+			this.dBeta += tmpBeta;
+			this.dGamma += tmpGamma;
+
 			this.freeze = false;
 
 			fireEvent( CONTROLLER_EVENT.MANUAL_CONTROL + 'end' );
@@ -324,7 +332,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		var rotQuat = new THREE.Quaternion();
 		var objQuat = new THREE.Quaternion();
 
-		var tmpZ, objZ, realZ, objY, realY;
+		var tmpZ, objZ, realZ;
 
 		var zoomFactor, minZoomFactor = 1; // maxZoomFactor = Infinity
 
@@ -354,21 +362,19 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
-				objY  = rotation.setFromQuaternion( objQuat, 'YXZ' ).y;
+				tmpAlpha = rotation.x;
+				tmpBeta = rotation.y;
+				tmpGamma = rotation.z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
-				realY = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).y;
+				tmpAlpha = rotation.x - tmpAlpha;
+				tmpBeta = rotation.y - tmpBeta;
+				tmpGamma = rotation.z - tmpGamma;
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
 				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
-
-				objQuat.multiply( rotQuat );
-
-				rotQuat.set( 0, Math.sin( ( realY - objY  ) / 2 ), 0, Math.cos( ( realY - objY ) / 2 ) );
-
-				objQuat.multiply( rotQuat );
 
 				this.object.quaternion.copy( objQuat );
 
@@ -443,6 +449,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
 				/*var rotQuat = new THREE.Quaternion();
+				rotQuat.applyEuler
 				rotQuat.setFromAxisAngle(new THREE.Vector3(0,0,1), this.lastPhi);
 				deviceQuat.multiply( rotQuat );
 				rotQuat.setFromAxisAngle(new THREE.Vector3(0,1,0), this.lastTheta);
