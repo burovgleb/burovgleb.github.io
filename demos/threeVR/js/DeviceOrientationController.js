@@ -29,6 +29,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 	this.lastPhi = 0;
 	this.lastTheta = 0;
 
+	this.alpha = 0;
+	this.beta = 0;
+	this.gamma = 0;
+
 	// Manual rotate override components
 	var startX = 0, startY = 0,
 	    currentX = 0, currentY = 0,
@@ -248,17 +252,19 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
-		var rotQuat = new THREE.Quaternion();
-		var realX, realY;
-
 		var minusHalfAngle = 0;
 
 		return function ( alpha, beta, gamma, screenOrientation ) {
+
+			this.alpha = alpha;
+			this.beta = beta;
+			this.gamma = gamma;
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
+			/*
 			realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
 			rotQuat.set( Math.sin( realX - lastTheta / 2 ), 0, 0, Math.cos( realX - lastTheta / 2 ) );
 			finalQuaternion.multiply( rotQuat );
@@ -266,6 +272,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 			realY = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).y;
 			rotQuat.set( 0, Math.sin( realY - lastPhi / 2 ), 0, Math.cos( realY - lastPhi / 2 ) );
 			finalQuaternion.multiply( rotQuat );
+			*/
 
 			minusHalfAngle = - screenOrientation / 2;
 

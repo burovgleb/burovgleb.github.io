@@ -104,6 +104,8 @@
 		</aside>
 
 		<div id="extra">
+			<span id="abg">alpha beta gamma</span>
+			<span id="pt">phi theta</span>
 			<span id="controllername">DeviceOrientation Control:</span>
 			<a id="controllertype" href="#" name="controllertype">Quaternions</a>
 		</div>
@@ -156,6 +158,8 @@
 			function setupControllerEventHandlers( controls ) {
 
 				var controllerEl = document.querySelector( '#controllername' );
+				var controllerAbg = document.querySelector( '#abg' );
+				var controllerPt = document.querySelector( '#pt' );
 				var controllerDefaultText = controllerEl.textContent;
 				var controllerSelectorEl = document.querySelector( '#controllertype' );
 
@@ -181,10 +185,11 @@
 				});
 
 				controls.addEventListener( 'rotateend', function () {
-					//controllerEl.innerText = controllerDefaultText;
+					controllerEl.innerText = controllerDefaultText;
 					// phi - up; down [pi/2; -pi/2]
 					// theta - left; right [pi/2; -pi/2]
-					controllerEl.innerText = controls.lastPhi + ' ' + controls.lastTheta;
+					controllerAbg.innerText = controls.alpha.toFixed(2) + ' ' + controls.beta.toFixed(2) + ' ' + controls.gamma.toFixed(2);
+					controllerPt.innerText = controls.lastPhi.toFixed(2)+ ' ' + controls.lastTheta.toFixed(2);
 				});
 
 				// Listen for manual zoom interaction
