@@ -113,8 +113,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 		startY = currentY = event.pageY;
 
 		// Set consistent scroll speed based on current viewport width/height
-		scrollSpeedX = ( 1200 / window.innerWidth ) * 0.2;
-		scrollSpeedY = ( 800 / window.innerHeight ) * 0.2;
+		scrollSpeedX = ( 1200 / window.innerWidth ) * -0.2;
+		scrollSpeedY = ( 800 / window.innerHeight ) * -0.2;
 
 		this.element.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
 		this.element.addEventListener( 'mouseup', this.onDocumentMouseUp, false );
@@ -158,8 +158,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 				startY = currentY = event.touches[ 0 ].pageY;
 
 				// Set consistent scroll speed based on current viewport width/height
-				scrollSpeedX = ( 1200 / window.innerWidth ) * 0.1;
-				scrollSpeedY = ( 800 / window.innerHeight ) * 0.1;
+				scrollSpeedX = ( 1200 / window.innerWidth ) * -0.1;
+				scrollSpeedY = ( 800 / window.innerHeight ) * -0.1;
 
 				this.element.addEventListener( 'touchmove', this.onDocumentTouchMove, false );
 				this.element.addEventListener( 'touchend', this.onDocumentTouchEnd, false );
