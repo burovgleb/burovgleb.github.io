@@ -223,8 +223,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 		if ( appState === CONTROLLER_STATE.MANUAL_ROTATE ) {
 
 			appState = CONTROLLER_STATE.AUTO; // reset control state
-			this.lastPhi = tmpPhi;
-			this.lastTheta = tmpTheta;
+			this.lastPhi += tmpPhi;
+			this.lastTheta += tmpTheta;
 
 			this.freeze = false;
 
@@ -409,8 +409,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function () {
 
-			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.lastPhi; // X'
+			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) + this.lastPhi; // Z
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
 			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.lastTheta; // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
