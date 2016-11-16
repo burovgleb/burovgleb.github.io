@@ -160,7 +160,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Set consistent scroll speed based on current viewport width/height
 				scrollSpeedX = ( 1200 / window.innerWidth ) * -0.1;
-				scrollSpeedY = ( 800 / window.innerHeight ) * 0.1;
+				scrollSpeedY = ( 800 / window.innerHeight ) * -0.1;
 
 				this.element.addEventListener( 'touchmove', this.onDocumentTouchMove, false );
 				this.element.addEventListener( 'touchend', this.onDocumentTouchEnd, false );
@@ -273,7 +273,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var deviceEuler = new THREE.Euler();
 		var screenEuler = new THREE.Euler();
-		var worldEuler = new THREE.Euler( - Math.PI / 2 + lastPhi, 0, 0, 'YXZ' ); // - PI/2 around the x-axis
+		var worldEuler = new THREE.Euler( - Math.PI / 2 + lastPhi, lastTheta, 0, 'YXZ' ); // - PI/2 around the x-axis
 
 		var screenTransform = new THREE.Matrix4();
 
