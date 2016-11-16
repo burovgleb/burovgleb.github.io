@@ -421,9 +421,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function () {
 
-			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
-			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
+			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) + this.dAlpha; // Z
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.dBeta; // X'
+			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.dGamma; // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
