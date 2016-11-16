@@ -28,10 +28,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 	this.lastPhi = 0;
 	this.lastTheta = 0;
-	this.dAlpha = 0;
-	this.dBeta = 0;
-	this.dGamma = 0;
-	this.lastObjQuat = new THREE.Quaternion();
 
 	this.ang1 = 0;
 	this.ang2 = 0;
@@ -230,10 +226,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 			this.lastPhi += tmpPhi;
 			this.lastTheta += tmpTheta;
 
-			this.dAlpha += tmpAlpha;
-			this.dBeta += tmpBeta;
-			this.dGamma += tmpGamma;
-
 			this.freeze = false;
 
 			fireEvent( CONTROLLER_EVENT.MANUAL_CONTROL + 'end' );
@@ -265,7 +257,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation, phi, theta ) {
+		return function ( alpha, beta, gamma, screenOrientation, phi, theta) {
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
@@ -378,8 +370,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
-
-				lastObjQuat.copy(objQuat);
 
 				this.object.quaternion.copy( objQuat );
 
