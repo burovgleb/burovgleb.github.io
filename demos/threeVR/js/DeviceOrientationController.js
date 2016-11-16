@@ -267,7 +267,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function ( alpha, beta, gamma, screenOrientation, alphaOffset, betaOffset, gammaOffset ) {
 
-			deviceEuler.set( beta + alphaOffset, alpha + alphaOffset, - gamma + gammaOffset, 'YXZ' );
+			deviceEuler.set( beta + betaOffset, alpha + alphaOffset, - gamma + gammaOffset, 'YXZ' );
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
