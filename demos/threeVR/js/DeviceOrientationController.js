@@ -275,7 +275,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
-			finalQuaternion.multiply( screenTransform );
+			//finalQuaternion.multiply( screenTransform );
 
 			//finalQuaternion.multiply( worldTransform );
 
