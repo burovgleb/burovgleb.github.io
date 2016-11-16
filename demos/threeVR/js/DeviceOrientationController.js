@@ -31,7 +31,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
 	    tmpQuat = new THREE.Quaternion(),
-		lastObjQuat = new THREE.Quaternion();
+		lastPhi = 0, lastTheta = 0;
 
 	// Manual zoom override components
 	var zoomStart = 1, zoomCurrent = 1,
@@ -329,6 +329,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
+				lastPhi = phi;
+				lastTheta = theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
@@ -338,11 +340,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				objQuat.multiply( rotQuat );
 
-				lastObjQuat.copy( objQuat );
-
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				/*tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
@@ -352,9 +352,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
-				objQuat.multiply( rotQuat );*/
-
-
+				objQuat.multiply( rotQuat );
 
 
 				this.object.quaternion.copy( objQuat );
@@ -402,8 +400,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function () {
 
-			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
+			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) - lastPhi; // Z
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) - lastTheta; // X'
 			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
@@ -413,8 +411,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.useQuaternions ) {
 
 					deviceQuat = createQuaternion( alpha, beta, gamma, orient );
-
-					deviceQuat.multiply( lastObjQuat );
 
 				} else {
 
