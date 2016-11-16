@@ -177,11 +177,14 @@
 				// Listen for manual rotate interaction
 
 				controls.addEventListener( 'rotatestart', function () {
-					controllerEl.innerText = controls.lastPhi + ' ' + controls.lastTheta;//'Manual Rotate';
+					controllerEl.innerText = 'Manual Rotate';
 				});
 
 				controls.addEventListener( 'rotateend', function () {
-					controllerEl.innerText = controllerDefaultText;
+					//controllerEl.innerText = controllerDefaultText;
+					// phi - up; down [pi/2; -pi/2]
+					// theta - left; right [pi/2; -pi/2]
+					controllerEl.innerText = controls.lastPhi + ' ' + controls.lastTheta;
 				});
 
 				// Listen for manual zoom interaction

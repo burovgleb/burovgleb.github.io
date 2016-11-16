@@ -258,23 +258,13 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
-			/*rotQuat.set( 0, Math.sin( lastTheta / 2 ), 0, Math.cos( lastTheta / 2 ) );
-
+			realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
+			rotQuat.set( Math.sin( realX - lastTheta / 2 ), 0, 0, Math.cos( realX - lastTheta / 2 ) );
 			finalQuaternion.multiply( rotQuat );
 
-			rotQuat.set( Math.sin( lastPhi / 2 ), 0, 0, Math.cos( lastPhi / 2 ) );
-
+			realY = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).y;
+			rotQuat.set( 0, Math.sin( realY - lastPhi / 2 ), 0, Math.cos( realY - lastPhi / 2 ) );
 			finalQuaternion.multiply( rotQuat );
-			*/
-
-			//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
-			//objX  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).x;
-			//objY  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).y;
-			//realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
-
-			//rotQuat.set( 0, Math.sin( ( realX - objX  ) / 2 ), 0, Math.cos( ( realX - objX ) / 2 ) );
-
-			//finalQuaternion.multiply( rotQuat );
 
 			minusHalfAngle = - screenOrientation / 2;
 
