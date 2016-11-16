@@ -249,6 +249,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var rotQuat = new THREE.Quaternion();
+		var realX, realY;
 
 		var minusHalfAngle = 0;
 
