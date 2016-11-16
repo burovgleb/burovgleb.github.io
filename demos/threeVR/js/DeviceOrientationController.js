@@ -159,7 +159,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Set consistent scroll speed based on current viewport width/height
 				scrollSpeedX = ( 1200 / window.innerWidth ) * -0.1;
-				scrollSpeedY = ( 800 / window.innerHeight ) * -0.1;
+				scrollSpeedY = ( 800 / window.innerHeight ) * 0.1;
 
 				this.element.addEventListener( 'touchmove', this.onDocumentTouchMove, false );
 				this.element.addEventListener( 'touchend', this.onDocumentTouchEnd, false );
@@ -345,11 +345,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
-				tmpQuat.multiply( rotQuat );
+				//tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
-				objQuat.multiply( rotQuat );
+				//objQuat.multiply( rotQuat );
 
 				this.object.quaternion.copy( objQuat );
 
