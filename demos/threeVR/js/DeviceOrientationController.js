@@ -256,10 +256,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function ( alpha, beta, gamma, screenOrientation ) {
 
-			this.ang1 = alpha;
-			this.ang2 = beta;
-			this.ang3 = gamma;
-
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
 			finalQuaternion.setFromEuler( deviceEuler );
@@ -424,6 +420,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
 			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) ; // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
+
+			this.ang1 = alpha;
+			this.ang2 = beta;
+			this.ang3 = gamma;
 
 			// only process non-zero 3-axis data
 			if ( alpha !== 0 && beta !== 0 && gamma !== 0) {
