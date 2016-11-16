@@ -362,13 +362,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
-				tmpAlpha = rotation.x;
-				tmpBeta = rotation.y;
-				tmpGamma = rotation.z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
-				tmpAlpha = rotation.x - tmpAlpha;
-				tmpBeta = rotation.y - tmpBeta;
-				tmpGamma = rotation.z - tmpGamma;
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
@@ -421,9 +415,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function () {
 
-			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) ; // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) ; // X'
-			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.dGamma; // Y''
+			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) + this.lastTheta; // Z
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.lastPhi; // X'
+			gamma  = 0; //THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
