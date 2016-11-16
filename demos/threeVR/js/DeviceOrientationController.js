@@ -30,7 +30,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 	var startX = 0, startY = 0,
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
-	    tmpQuat = new THREE.Quaternion();
+	    tmpQuat = new THREE.Quaternion(),
+		lastObjQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
 	var zoomStart = 1, zoomCurrent = 1,
@@ -345,11 +346,13 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
-				//tmpQuat.multiply( rotQuat );
+				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
-				//objQuat.multiply( rotQuat );
+				objQuat.multiply( rotQuat );
+
+				lastObjQuat.copy( objQuat );
 
 				this.object.quaternion.copy( objQuat );
 
@@ -407,6 +410,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.useQuaternions ) {
 
 					deviceQuat = createQuaternion( alpha, beta, gamma, orient );
+
+					deviceQuat.multiply( lastObjQuat );
 
 				} else {
 
