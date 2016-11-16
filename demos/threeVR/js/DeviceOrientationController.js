@@ -246,7 +246,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
-		//var rotQuat = new THREE.Quaternion();
+		var rotQuat = new THREE.Quaternion();
 
 		var minusHalfAngle = 0;
 
@@ -272,6 +272,14 @@ var DeviceOrientationController = function ( object, domElement ) {
 			finalQuaternion.multiply( screenTransform );
 
 			finalQuaternion.multiply( worldTransform );
+
+			//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+			objX  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).x;
+			realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
+
+			rotQuat.set( 0, Math.sin( ( realX - objX  ) / 2 ), 0, Math.cos( ( realX - objX ) / 2 ) );
+
+			finalQuaternion.multiply( rotQuat );
 
 			return finalQuaternion;
 
@@ -354,14 +362,13 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
-				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
+				/*rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
-				tmpQuat.multiply( rotQuat );
-
+				tmpQuat.multiply( rotQuat );*/
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
