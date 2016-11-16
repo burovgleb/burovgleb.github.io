@@ -28,6 +28,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 	this.lastPhi = 0;
 	this.lastTheta = 0;
+	this.lastObjQuat = new THREE.Quaternion();
 
 	this.ang1 = 0;
 	this.ang2 = 0;
@@ -37,8 +38,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 	var startX = 0, startY = 0,
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
-	    tmpQuat = new THREE.Quaternion(),
-		lastObjQuat = new THREE.Quaternion();
+	    tmpQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
 	var zoomStart = 1, zoomCurrent = 1,
@@ -371,6 +371,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				objQuat.multiply( rotQuat );
 
+				this.lastObjQuat.copy( objQuat );
+
 				this.object.quaternion.copy( objQuat );
 
 			} else if ( appState === CONTROLLER_STATE.MANUAL_ZOOM ) {
@@ -430,7 +432,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					deviceQuat = createQuaternion( alpha, beta + this.lastPhi, gamma, orient );
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient );
 
 				} else {
 
@@ -443,6 +445,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
+				deviceQuat.multiply(this.lastObjQuat);
+
 				this.object.quaternion.copy( deviceQuat );
 
 			}
