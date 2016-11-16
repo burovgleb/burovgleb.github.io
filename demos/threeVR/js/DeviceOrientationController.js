@@ -336,8 +336,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
-				this.lastPhi = phi;
-				this.lastTheta = theta;
+				this.lastPhi += phi;
+				this.lastTheta += theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
@@ -410,7 +410,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
 			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
-			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) ; // Y''
+			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.lastTheta ; // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
@@ -435,15 +435,15 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
-				var rotQuat = new THREE.Quaternion();
+				//var rotQuat = new THREE.Quaternion();
 				//var objQuat = new THREE.Quaternion();
 
 				//objQuat.copy(this.lastObjQuat);
 
-				objX  = rotation.setFromQuaternion( this.lastObjQuat, 'YXZ' ).x;
-				realX = rotation.setFromQuaternion( deviceQuat, 'YXZ' ).x;
-				rotQuat.set( Math.sin( ( realX + objX  ) / 2 ), 0, 0, Math.cos( ( realX + objX ) / 2 ) );
-				deviceQuat.multiply( rotQuat );
+				//objX  = rotation.setFromQuaternion( this.lastObjQuat, 'YXZ' ).x;
+				//realX = rotation.setFromQuaternion( deviceQuat, 'YXZ' ).x;
+				//rotQuat.set( Math.sin( ( realX + objX  ) / 2 ), 0, 0, Math.cos( ( realX + objX ) / 2 ) );
+				//deviceQuat.multiply( rotQuat );
 
 				this.object.quaternion.copy( deviceQuat );
 
