@@ -265,21 +265,22 @@ var DeviceOrientationController = function ( object, domElement ) {
 			finalQuaternion.multiply( rotQuat );
 			*/
 
-			minusHalfAngle = - screenOrientation / 2;
+			//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+			objX  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).x;
+			objY  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).y;
+			//realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
+
+			//rotQuat.set( 0, Math.sin( ( realX - objX  ) / 2 ), 0, Math.cos( ( realX - objX ) / 2 ) );
+
+			//finalQuaternion.multiply( rotQuat );
+
+			minusHalfAngle = - (screenOrientation - objY) / 2;
 
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
 			finalQuaternion.multiply( screenTransform );
 
 			finalQuaternion.multiply( worldTransform );
-
-			//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
-			objX  = rotation.setFromQuaternion( lastObjQuat, 'YXZ' ).x;
-			realX = rotation.setFromQuaternion( finalQuaternion, 'YXZ' ).x;
-
-			rotQuat.set( 0, Math.sin( ( realX - objX  ) / 2 ), 0, Math.cos( ( realX - objX ) / 2 ) );
-
-			finalQuaternion.multiply( rotQuat );
 
 			return finalQuaternion;
 
