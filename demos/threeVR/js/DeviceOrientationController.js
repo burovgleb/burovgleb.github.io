@@ -354,14 +354,14 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
-				/*rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
+				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
 				tmpQuat.multiply( rotQuat );
-				*/
+
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
