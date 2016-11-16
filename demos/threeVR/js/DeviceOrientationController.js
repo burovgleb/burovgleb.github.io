@@ -277,7 +277,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.multiply( screenTransform );
 
-			finalQuaternion.multiply( worldTransform );
+			//finalQuaternion.multiply( worldTransform );
 
 			return finalQuaternion;
 
@@ -443,11 +443,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
-				var rotQuat = new THREE.Quaternion();
-				rotQuat.setFromAxisAngle(new THREE.Vector3(1,0,0), this.lastPhi);
-				deviceQuat.multiply( rotQuat );
-				rotQuat.setFromAxisAngle(new THREE.Vector3(0,1,0), this.lastTheta);
-				deviceQuat.multiply( rotQuat );
 
 				this.object.quaternion.copy( deviceQuat );
 
