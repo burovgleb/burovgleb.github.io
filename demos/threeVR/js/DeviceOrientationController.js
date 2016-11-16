@@ -438,10 +438,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 				var rotQuat = new THREE.Quaternion();
 				var objQuat = new THREE.Quaternion();
 
-				objQuat.copy(this.lastObjQuat)
+				objQuat.copy(this.lastObjQuat);
 
 				objX  = rotation.setFromQuaternion( objQuat, 'YXZ' ).x;
-				realX = rotation.setFromQuaternion( deviceQuat, 'YXZ' ).z;
+				realX = rotation.setFromQuaternion( deviceQuat, 'YXZ' ).x;
 				rotQuat.set( Math.sin( ( realX + objX  ) / 2 ), 0, 0, Math.cos( ( realX + objX ) / 2 ) );
 				deviceQuat.multiply( rotQuat );
 
