@@ -354,7 +354,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
-				objY  = rotation.setFromQuaternion( objQuat, 'YXZ' ).y
+				objY  = rotation.setFromQuaternion( objQuat, 'YXZ' ).y;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 				realY = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).y;
 
@@ -366,7 +366,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				objQuat.multiply( rotQuat );
 
-				rotQuat.set( 0, Math.sin( ( realY - objX  ) / 2 ), 0, Math.cos( ( realY - objY ) / 2 ) );
+				rotQuat.set( 0, Math.sin( ( realY - objY  ) / 2 ), 0, Math.cos( ( realY - objY ) / 2 ) );
 
 				objQuat.multiply( rotQuat );
 
