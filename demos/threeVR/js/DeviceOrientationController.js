@@ -337,7 +337,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
 				this.lastPhi = this.lastPhi + phi;
-				this.lastTheta = this.lastTheta = theta;
+				this.lastTheta = this.lastTheta + theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
