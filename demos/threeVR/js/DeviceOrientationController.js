@@ -336,8 +336,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				phi	 = THREE.Math.degToRad( lat );
 				theta = THREE.Math.degToRad( lon );
-				this.lastPhi += phi;
-				this.lastTheta += theta;
+				this.lastPhi = this.lastPhi + phi;
+				this.lastTheta = this.lastTheta = theta;
 
 				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
@@ -360,8 +360,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
 				objQuat.multiply( rotQuat );
-
-				this.lastObjQuat.copy( objQuat );
 
 				this.object.quaternion.copy( objQuat );
 
@@ -409,8 +407,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 		return function () {
 
 			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ); // Z
-			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ); // X'
-			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ) + this.lastTheta ; // Y''
+			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.lastTheta; // X'
+			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
