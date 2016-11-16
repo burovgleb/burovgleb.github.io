@@ -267,8 +267,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		return function ( alpha, beta, gamma, screenOrientation ) {
 
-			//deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
-			deviceEuler.set( alpha, beta, - gamma, 'YXZ' );
+			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
+			//deviceEuler.set( alpha, beta, - gamma, 'YXZ' );
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
@@ -276,9 +276,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
-			//finalQuaternion.multiply( screenTransform );
+			finalQuaternion.multiply( screenTransform );
 
-			finalQuaternion.multiply( worldTransform );
+			//finalQuaternion.multiply( worldTransform );
 
 			return finalQuaternion;
 
