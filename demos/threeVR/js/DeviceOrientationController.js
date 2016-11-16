@@ -245,6 +245,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
+		var rotQuat = new THREE.Quaternion();
+
 		var minusHalfAngle = 0;
 
 		return function ( alpha, beta, gamma, screenOrientation ) {
@@ -253,7 +255,15 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.setFromEuler( deviceEuler );
 
-			minusHalfAngle = - screenOrientation / 4;
+			rotQuat.set( 0, Math.sin( lastTheta / 2 ), 0, Math.cos( lastTheta / 2 ) );
+
+			finalQuaternion.multiply( rotQuat );
+
+			rotQuat.set( Math.sin( lastPhi / 2 ), 0, 0, Math.cos( lastPhi / 2 ) );
+
+			finalQuaternion.multiply( rotQuat );
+
+			minusHalfAngle = - screenOrientation / 2;
 
 			screenTransform.set( 0, Math.sin( minusHalfAngle ), 0, Math.cos( minusHalfAngle ) );
 
