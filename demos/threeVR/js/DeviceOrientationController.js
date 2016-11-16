@@ -261,11 +261,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var screenTransform = new THREE.Quaternion();
 
-		//var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
+		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation, worldTransform ) {
+		return function ( alpha, beta, gamma, screenOrientation, phi, theta ) {
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
@@ -277,9 +277,16 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.multiply( screenTransform );
 
-			//worldTransform.set( 0, Math.sin( Math.PI / 2 ), 0, Math.cos( minusHalfAngle ) );
+
+			//finalQuaternion.multiply( worldTransform );
+
+			worldTransform.set( Math.sin( ( - Math.PI / 2 - theta) / 2 ), 0, 0, Math.cos( ( - Math.PI / 2 - theta) / 2 ) );
 
 			finalQuaternion.multiply( worldTransform );
+
+			//worldTransform.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
+
+			//worldTransform.multiply( worldTransform );
 
 			return finalQuaternion;
 
@@ -433,7 +440,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					deviceQuat = createQuaternion( alpha, beta, gamma, orient, this.lastObjQuat);
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient, 0, this.lastTheta);
 
 				} else {
 
