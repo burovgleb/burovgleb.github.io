@@ -360,7 +360,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				/*tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
@@ -369,6 +369,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
+				*/
 
 				this.object.quaternion.copy( objQuat );
 
@@ -417,7 +418,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			alpha  = THREE.Math.degToRad( this.deviceOrientation.alpha || 0 ) + this.lastTheta; // Z
 			beta   = THREE.Math.degToRad( this.deviceOrientation.beta  || 0 ) + this.lastPhi; // X'
-			gamma  = 0; //THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
+			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
 			this.ang1 = alpha;
