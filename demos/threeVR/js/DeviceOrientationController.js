@@ -352,7 +352,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				objQuat.multiply( rotQuat );
 
-				lastObjQuat.copy( objQuat );
+				lastObjQuat.copy( tmpQuat );
 
 				this.object.quaternion.copy( objQuat );
 
