@@ -253,6 +253,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var screenTransform = new THREE.Quaternion();
 
+		var rotQuat = new THREE.Quaternion();
+
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
@@ -269,16 +271,17 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.multiply( screenTransform );
 
+			rotQuat.copy(worldTransform);
 
 			finalQuaternion.multiply( worldTransform );
 
-			worldTransform.set( Math.sin( ( - theta ) / 2 ), 0, 0, Math.cos( ( - theta) / 2 ) );
+			rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
-			finalQuaternion.multiply( worldTransform );
+			finalQuaternion.multiply( rotQuat );
 
-			//worldTransform.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
+			rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
 
-			//worldTransform.multiply( worldTransform );
+			finalQuaternion.multiply( rotQuat );
 
 			return finalQuaternion;
 
