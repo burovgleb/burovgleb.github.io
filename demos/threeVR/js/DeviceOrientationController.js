@@ -31,7 +31,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
 	    tmpQuat = new THREE.Quaternion(),
-		lastPhi = 0, lastTheta = 0;
+		lastPhi = 0, lastTheta = 0,
+		lastObjQuat = new THREE.Quaternion();
 
 	// Manual zoom override components
 	var zoomStart = 1, zoomCurrent = 1,
@@ -353,19 +354,18 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				/*tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				//tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
-				rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
+				/*rotQuat.set( 0, 0, Math.sin( ( realZ - tmpZ  ) / 2 ), Math.cos( ( realZ - tmpZ ) / 2 ) );
 
 				tmpQuat.multiply( rotQuat );
+				*/
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
 				objQuat.multiply( rotQuat );
-				*/
-
 
 				this.object.quaternion.copy( objQuat );
 
