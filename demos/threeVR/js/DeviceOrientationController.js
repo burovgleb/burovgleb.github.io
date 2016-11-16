@@ -272,7 +272,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			//finalQuaternion.multiply( worldTransform );
 
-			worldTransform.set( Math.sin( ( - Math.PI / 2 + theta) / 2 ), 0, 0, Math.cos( ( - Math.PI / 2 + theta) / 2 ) );
+			worldTransform.set( Math.sin( ( - theta ) / 2 ), 0, 0, Math.cos( ( - theta) / 2 ) );
 
 			finalQuaternion.multiply( worldTransform );
 
