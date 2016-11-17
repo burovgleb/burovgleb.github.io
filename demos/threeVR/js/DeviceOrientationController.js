@@ -510,14 +510,14 @@ var DeviceOrientationController = function ( object, domElement ) {
 			pitch = Math.PI / 2;
 			roll = 0;
 
-			var euler = new THREE.Vector3( pitch, roll, yaw);
+			var euler = new THREE.Vector3( roll, pitch, yaw);
 			return euler;
 		}
 		if (test < -0.499) { // singularity at south pole
 			yaw = -2 * Math.atan2(x, w);
 			pitch = -Math.PI / 2;
 			roll = 0;
-			var euler = new THREE.Vector3( pitch, roll, yaw);
+			var euler = new THREE.Vector3( roll, pitch, yaw);
 			return euler;
 		}
 		var sqx = x * x;
