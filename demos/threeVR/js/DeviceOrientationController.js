@@ -522,7 +522,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		pitch = Math.asin(2 * test);
 		roll = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz);
 
-		var euler = new THREE.Vector3( pitch, 0, yaw);
+		var euler = new THREE.Vector3( pitch, roll, yaw);
 		return euler;
 	}
 
