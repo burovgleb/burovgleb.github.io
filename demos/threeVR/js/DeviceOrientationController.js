@@ -451,7 +451,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				this.object.quaternion.copy( deviceQuat );
+				var quat = AngleToQuat(currentAngle.x, currentAngle.y, currentAngle.z)
+
+				this.object.quaternion.copy( quat );
 
 			}
 
@@ -518,12 +520,24 @@ var DeviceOrientationController = function ( object, domElement ) {
 		var sqx = x * x;
 		var sqy = y * y;
 		var sqz = z * z;
-		yaw = Math.atan2(2 * y * w - 2 * x * z, 1 - 2 * sqy - 2 * sqz);
-		pitch = Math.asin(2 * test);
-		roll = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz);
+		yaw = Math.atan2(2 * y * w - 2 * x * z, 1 - 2 * sqy - 2 * sqz); // gamma via vertical axis from pi/2 (left) to -pi/2 rigth
+		pitch = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz); // beta via lateral axis from -pi/2 (ddwn) to pi/2 (up)
+		roll = Math.asin(2 * test); // aplha via longitudal axis from pi/2 (contrclockwise) to -pi/2 (clockwise)
 
-		var euler = new THREE.Vector3( pitch, roll, yaw);
+		var euler = new THREE.Vector3( yaw, pitch, roll);
 		return euler;
+	}
+
+	function AngleToQuat(phi, theta, psi) {
+
+		var x, y, z, w;
+
+		x = Math.cos(phi/2) * Math.cos(theta/2) * Math.cos(psi/2) + Math.sin(phi/2) * Math.sin(theta/2) * Math.sin(psi/2);
+		y = Math.sin(phi/2) * Math.cos(theta/2) * Math.cos(psi/2) - Math.cos(phi/2) * Math.sin(theta/2) * Math.sin(psi/2);
+		z = Math.cos(phi/2) * Math.sin(theta/2) * Math.cos(psi/2) + Math.sin(phi/2) * Math.cos(theta/2) * Math.sin(psi/2);
+		w = Math.cos(phi/2) * Math.cos(theta/2) * Math.sin(psi/2) - Math.sin(phi/2) * Math.sin(theta/2) * Math.cos(psi/2);
+
+		return new THREE.Quaternion(x, y, z, w );
 	}
 
 };
