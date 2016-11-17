@@ -528,14 +528,21 @@ var DeviceOrientationController = function ( object, domElement ) {
 		return euler;
 	}
 
-	function AngleToQuat(phi, theta, psi) {
+	function AngleToQuat(roll, pitch, yaw) {
 
 		var x, y, z, w;
 
-		x = Math.cos(phi/2) * Math.cos(theta/2) * Math.cos(psi/2) + Math.sin(phi/2) * Math.sin(theta/2) * Math.sin(psi/2);
-		y = Math.sin(phi/2) * Math.cos(theta/2) * Math.cos(psi/2) - Math.cos(phi/2) * Math.sin(theta/2) * Math.sin(psi/2);
-		z = Math.cos(phi/2) * Math.sin(theta/2) * Math.cos(psi/2) + Math.sin(phi/2) * Math.cos(theta/2) * Math.sin(psi/2);
-		w = Math.cos(phi/2) * Math.cos(theta/2) * Math.sin(psi/2) - Math.sin(phi/2) * Math.sin(theta/2) * Math.cos(psi/2);
+		t0 = Math.cos(yaw/2);
+		t1 = Math.sin(yaw/2);
+		t2 = Math.cos(roll/2);
+		t3 = Math.sin(roll/2);
+		t4 = Math.cos(pitch/2);
+		t5 = Math.sin(pitch/2);
+
+		w = t0 * t2 * t4 + t1 * t3 * t5;
+		x = t0 * t3 * t4 - t1 * t2 * t5;
+		y = t0 * t2 * t5 + t1 * t3 * t4;
+		z = t1 * t2 * t4 - t0 * t3 * t5;
 
 		return new THREE.Quaternion(x, y, z, w );
 	}
