@@ -451,7 +451,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				var quat = AngleToQuat(currentAngle.x, currentAngle.y, currentAngle.z)
+				var quat = AngleToQuat(currentAngle.y, 0, 0)
 
 				this.object.quaternion.copy( quat );
 
@@ -524,7 +524,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		pitch = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz); // beta via lateral axis from -pi/2 (ddwn) to pi/2 (up)
 		roll = Math.asin(2 * test); // aplha via longitudal axis from pi/2 (contrclockwise) to -pi/2 (clockwise)
 
-		var euler = new THREE.Vector3( 0, pitch, 0);
+		var euler = new THREE.Vector3( roll, pitch, yaw);
 		return euler;
 	}
 
