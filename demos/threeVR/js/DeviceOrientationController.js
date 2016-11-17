@@ -354,9 +354,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpPhi = phi;
 				tmpTheta = theta;
 
-				var currentAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
+				var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
+				var deviceAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
-				var quat = AngleToQuat(currentAngle.y + phi, currentAngle.z + theta, currentAngle.x);
+				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, deviceAngle.x);
 
 				/*rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
