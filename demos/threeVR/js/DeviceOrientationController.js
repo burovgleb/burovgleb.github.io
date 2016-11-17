@@ -381,7 +381,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
-				this.object.quaternion.copy( quat );
+				this.object.quaternion.copy( rotQuat );
 
 			} else if ( appState === CONTROLLER_STATE.MANUAL_ZOOM ) {
 
