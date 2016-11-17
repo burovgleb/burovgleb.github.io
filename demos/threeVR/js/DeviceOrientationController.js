@@ -38,6 +38,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 	    currentX = 0, currentY = 0,
 	    scrollSpeedX, scrollSpeedY,
 		tmpPhi = 0, tmpTheta = 0,
+		worldTransformQuat =new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 		tmpAlpha = 0, tmpBeta = 0, tmpGamma = 0,
 	    tmpQuat = new THREE.Quaternion();
 
@@ -255,11 +256,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		//var rotQuat = new THREE.Quaternion();
 
-		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
+		//var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation) {
+		return function ( alpha, beta, gamma, screenOrientation, worldTransform) {
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
@@ -435,7 +436,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					deviceQuat = createQuaternion( alpha, beta, gamma, orient);
+					var quat = AngleToQuat(- Math.PI / 2 + this.lastPhi, this.lastTheta, 0);
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient, quat);
 
 				} else {
 
@@ -448,15 +450,15 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
-				var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
+				/*var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
 				this.ang1 = currentAngle.x;
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, 0);
+				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, 0);*/
 
-				this.object.quaternion.copy( quat );
+				this.object.quaternion.copy( deviceQuat );
 
 			}
 
