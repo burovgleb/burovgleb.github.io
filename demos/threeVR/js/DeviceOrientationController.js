@@ -354,13 +354,18 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpPhi = phi;
 				tmpTheta = theta;
 
-				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
+				var currentAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
+
+				var quat = AngleToQuat(currentAngle.y + phi, currentAngle.z + theta, 0);
+
+				/*rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
 				objQuat.multiply( rotQuat );
 
 				rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
 
 				objQuat.multiply( rotQuat );
+				*/
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
@@ -374,7 +379,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );*/
 
-				this.object.quaternion.copy( objQuat );
+				this.object.quaternion.copy( quat );
 
 			} else if ( appState === CONTROLLER_STATE.MANUAL_ZOOM ) {
 
