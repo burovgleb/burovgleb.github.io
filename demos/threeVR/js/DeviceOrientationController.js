@@ -254,13 +254,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var screenTransform = new THREE.Quaternion();
 
-		//var rotQuat = new THREE.Quaternion();
-
-		//var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
+		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation, worldTransform) {
+		return function ( alpha, beta, gamma, screenOrientation) {
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
@@ -272,17 +270,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.multiply( screenTransform );
 
-			//rotQuat.copy(worldTransform);
-
 			finalQuaternion.multiply( worldTransform );
-
-			//rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
-
-			//finalQuaternion.multiply( rotQuat );
-
-			//rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
-
-			//finalQuaternion.multiply( rotQuat );
 
 			return finalQuaternion;
 
@@ -355,12 +343,12 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpPhi = phi;
 				tmpTheta = theta;
 
-				/*var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
-				var deviceAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
+				var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
+				//var deviceAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
-				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, 0);*/
+				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, 0);
 
-				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
+				/*rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
 				objQuat.multiply( rotQuat );
 
@@ -380,8 +368,9 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpQuat.multiply( rotQuat );
 
 				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
+				*/
 
-				this.object.quaternion.copy( rotQuat );
+				this.object.quaternion.copy( quat );
 
 			} else if ( appState === CONTROLLER_STATE.MANUAL_ZOOM ) {
 
@@ -436,8 +425,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					var quat = AngleToQuat(- Math.PI / 2 + this.lastPhi, 0, this.lastTheta);
-					deviceQuat = createQuaternion( alpha, beta, gamma, orient, quat);
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient);
 
 				} else {
 
@@ -450,15 +438,15 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
-				/*var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
+				var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
 				this.ang1 = currentAngle.x;
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, 0);*/
+				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, 0);
 
-				this.object.quaternion.copy( deviceQuat );
+				this.object.quaternion.copy( quat );
 
 			}
 
