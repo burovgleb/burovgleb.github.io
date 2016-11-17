@@ -357,7 +357,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
 				var deviceAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
-				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, deviceAngle.x);
+				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, 0);
 
 				/*rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
@@ -449,15 +449,12 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
 				var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
-				//var radDeg = 180 / Math.PI;
-				// currentAngle.z = Left-right
-				// currentAngle.y = Up-down
-				//deviceQuat.setFromAxisAngle(currentAngle);
+
 				this.ang1 = currentAngle.x;
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, currentAngle.x);
+				var quat = AngleToQuat(currentAngle.y + this.lastPhi, currentAngle.z + this.lastTheta, 0);
 
 				this.object.quaternion.copy( quat );
 
