@@ -253,13 +253,13 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var screenTransform = new THREE.Quaternion();
 
-		var rotQuat = new THREE.Quaternion();
+		//var rotQuat = new THREE.Quaternion();
 
 		var worldTransform = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5) ); // - PI/2 around the x-axis
 
 		var minusHalfAngle = 0;
 
-		return function ( alpha, beta, gamma, screenOrientation, phi, theta) {
+		return function ( alpha, beta, gamma, screenOrientation) {
 
 			deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
 
@@ -271,17 +271,17 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 			finalQuaternion.multiply( screenTransform );
 
-			rotQuat.copy(worldTransform);
+			//rotQuat.copy(worldTransform);
 
 			finalQuaternion.multiply( worldTransform );
 
-			rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
+			//rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
-			finalQuaternion.multiply( rotQuat );
+			//finalQuaternion.multiply( rotQuat );
 
-			rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
+			//rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
 
-			finalQuaternion.multiply( rotQuat );
+			//finalQuaternion.multiply( rotQuat );
 
 			return finalQuaternion;
 
@@ -433,7 +433,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				if ( this.useQuaternions ) {
 
-					deviceQuat = createQuaternion( alpha, beta, gamma, orient, 0, this.lastTheta);
+					deviceQuat = createQuaternion( alpha, beta, gamma, orient);
 
 				} else {
 
@@ -446,6 +446,11 @@ var DeviceOrientationController = function ( object, domElement ) {
 				if ( this.freeze ) return;
 
 				//this.object.quaternion.slerp( deviceQuat, 0.07 ); // smoothing
+				var currentAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
+				//var radDeg = 180 / Math.PI;
+				// currentAngle.z = Left-right
+				// currentAngle.y = Up-down
+				deviceQuat.setFromEuler(currentAngle);
 
 				this.object.quaternion.copy( deviceQuat );
 
@@ -490,6 +495,37 @@ var DeviceOrientationController = function ( object, domElement ) {
 		this.element.removeEventListener( 'mousedown', this.onDocumentMouseDown, false );
 		this.element.removeEventListener( 'touchstart', this.onDocumentTouchStart, false );
 	};
+
+	function Quat2Angle( x, y, z, w ) {
+
+		var pitch, roll, yaw;
+
+		var test = x * y + z * w;
+		if (test > 0.499) { // singularity at north pole
+			yaw = 2 * Math.atan2(x, w);
+			pitch = Math.PI / 2;
+			roll = 0;
+
+			var euler = new THREE.Vector3( pitch, roll, yaw);
+			return euler;
+		}
+		if (test < -0.499) { // singularity at south pole
+			yaw = -2 * Math.atan2(x, w);
+			pitch = -Math.PI / 2;
+			roll = 0;
+			var euler = new THREE.Vector3( pitch, roll, yaw);
+			return euler;
+		}
+		var sqx = x * x;
+		var sqy = y * y;
+		var sqz = z * z;
+		yaw = Math.atan2(2 * y * w - 2 * x * z, 1 - 2 * sqy - 2 * sqz);
+		pitch = Math.asin(2 * test);
+		roll = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz);
+
+		var euler = new THREE.Vector3( pitch, 0, yaw);
+		return euler;
+	}
 
 };
 
