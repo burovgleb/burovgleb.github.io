@@ -424,10 +424,6 @@ var DeviceOrientationController = function ( object, domElement ) {
 			gamma  = THREE.Math.degToRad( this.deviceOrientation.gamma || 0 ); // Y''
 			orient = THREE.Math.degToRad( this.screenOrientation       || 0 ); // O
 
-			this.ang1 = alpha;
-			this.ang2 = beta;
-			this.ang3 = gamma;
-
 			// only process non-zero 3-axis data
 			if ( alpha !== 0 && beta !== 0 && gamma !== 0) {
 
@@ -450,7 +446,10 @@ var DeviceOrientationController = function ( object, domElement ) {
 				//var radDeg = 180 / Math.PI;
 				// currentAngle.z = Left-right
 				// currentAngle.y = Up-down
-				deviceQuat.setFromAxisAngle(currentAngle);
+				//deviceQuat.setFromAxisAngle(currentAngle);
+				this.ang1 = currentAngle.x;
+				this.ang2 = currentAngle.y;
+				this.ang3 = currentAngle.z;
 
 				this.object.quaternion.copy( deviceQuat );
 
@@ -523,7 +522,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		pitch = Math.asin(2 * test);
 		roll = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz);
 
-		var euler = new THREE.Euler( pitch, 0, yaw, 'YXZ');
+		var euler = new THREE.Vector3( pitch, 0, yaw);
 		return euler;
 	}
 
