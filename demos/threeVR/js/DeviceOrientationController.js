@@ -535,8 +535,8 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 		var x, y, z, w;
 
-		if (pitch <= - Math.PI/2) pitch = -Math.PI/2;
-		else if (pitch >= Math.PI/2) pitch = Math.PI/2;
+		if (roll <= - Math.PI/2) roll = -Math.PI/2;
+		else if (roll >= Math.PI/2) roll = Math.PI/2;
 
 		t0 = Math.cos(yaw/2);
 		t1 = Math.sin(yaw/2);
