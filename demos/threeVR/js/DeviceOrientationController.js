@@ -524,7 +524,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		pitch = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz); // beta via lateral axis from -pi/2 (ddwn) to pi/2 (up)
 		roll = Math.asin(2 * test); // aplha via longitudal axis from pi/2 (contrclockwise) to -pi/2 (clockwise)
 
-		var euler = new THREE.Vector3( roll, pitch, yaw);
+		var euler = new THREE.Vector3( 0, pitch, yaw);
 		return euler;
 	}
 
