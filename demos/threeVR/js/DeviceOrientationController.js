@@ -355,23 +355,23 @@ var DeviceOrientationController = function ( object, domElement ) {
 				tmpPhi = phi;
 				tmpTheta = theta;
 
-				var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
+				/*var objAngle = Quat2Angle(objQuat.x, objQuat.y, objQuat.z, objQuat.w);
 				var deviceAngle = Quat2Angle(deviceQuat.x, deviceQuat.y, deviceQuat.z, deviceQuat.w);
 
-				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, 0);
+				var quat = AngleToQuat(objAngle.y + phi, objAngle.z + theta, 0);*/
 
-				/*rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
+				rotQuat.set( 0, Math.sin( theta / 2 ), 0, Math.cos( theta / 2 ) );
 
 				objQuat.multiply( rotQuat );
 
 				rotQuat.set( Math.sin( phi / 2 ), 0, 0, Math.cos( phi / 2 ) );
 
 				objQuat.multiply( rotQuat );
-				*/
+
 
 				// Remove introduced z-axis rotation and add device's current z-axis rotation
 
-				/*tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
+				tmpZ  = rotation.setFromQuaternion( tmpQuat, 'YXZ' ).z;
 				objZ  = rotation.setFromQuaternion( objQuat, 'YXZ' ).z;
 				realZ = rotation.setFromQuaternion( deviceQuat || tmpQuat, 'YXZ' ).z;
 
@@ -379,7 +379,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 
 				tmpQuat.multiply( rotQuat );
 
-				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );*/
+				rotQuat.set( 0, 0, Math.sin( ( realZ - objZ  ) / 2 ), Math.cos( ( realZ - objZ ) / 2 ) );
 
 				this.object.quaternion.copy( quat );
 
