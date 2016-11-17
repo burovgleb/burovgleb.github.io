@@ -451,7 +451,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				this.ang2 = currentAngle.y;
 				this.ang3 = currentAngle.z;
 
-				var quat = AngleToQuat(currentAngle.y, 0, currentAngle.x)
+				var quat = AngleToQuat(currentAngle.y, currentAngle.z, currentAngle.x)
 
 				this.object.quaternion.copy( quat );
 
