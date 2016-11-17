@@ -450,7 +450,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 				//var radDeg = 180 / Math.PI;
 				// currentAngle.z = Left-right
 				// currentAngle.y = Up-down
-				deviceQuat.setFromEuler(currentAngle);
+				deviceQuat.setFromAxisAngle(currentAngle);
 
 				this.object.quaternion.copy( deviceQuat );
 
@@ -523,7 +523,7 @@ var DeviceOrientationController = function ( object, domElement ) {
 		pitch = Math.asin(2 * test);
 		roll = Math.atan2(2 * x * w - 2 * y * z, 1 - 2 * sqx - 2 * sqz);
 
-		var euler = new THREE.Vector3( pitch, 0, yaw);
+		var euler = new THREE.Euler( pitch, 0, yaw, 'YXZ');
 		return euler;
 	}
 
