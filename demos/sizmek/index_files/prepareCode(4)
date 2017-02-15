@@ -1,0 +1,66 @@
+/*
+* Note: Compatibility async embed codes;
+*/
+(function() {
+    function bannerFunction() {
+        document.getElementById('AdFox_banner_621960').innerHTML = '<div id="yandex_rtb_R-AF-162377-6"></div>';
+        (function(w, d, n, s, t) {
+            w[n] = w[n] || [];
+            w[n].push(function() {
+                Ya.Context.AdvManager.render({
+                    blockId: "R-AF-162377-6",
+                    renderTo: "yandex_rtb_R-AF-162377-6",
+                    async: true,
+                    onRender: function (d) {
+                        document.getElementById('yandex_rtb_R-AF-162377-6').style.margin = '0 auto';
+                        document.getElementById('yandex_rtb_R-AF-162377-6').style.display = 'inline-block';
+                        document.getElementById('AdFox_banner_621960').style.textAlign = 'center';
+                        try {
+                            if (document.all && !window.opera) {
+                                d = window.frames['AdFox_iframe_621960'].document;
+                            } else if (document.getElementById) {
+                                d = document.getElementById('AdFox_iframe_621960').contentDocument;
+                            }
+                        } catch (e) {}
+                        if (d) {
+                            setTimeout(function(){d.close();},10);
+                        }
+                        (new Image()).src = 'http://ads.adfox.ru/1092/event?rand=cqldqyb&p5=dojuk&p1=btgny&pr=sxor&puid1=21&p2=ffyl&puid3=0&puid5=100&lts=etameko&hash=c63d6f1b84b53dcc&pm=be';
+                    }
+                },
+                function (d, s, i, t) {
+                    i = 621960;
+                    document.getElementById('AdFox_banner_'+i).innerHTML = '';
+                    try {
+                        if (document.all && !window.opera) {
+                            d = window.frames['AdFox_iframe_'+i].document;
+                        } else if (document.getElementById) {
+                            d = document.getElementById('AdFox_iframe_'+i).contentDocument;
+                        }
+                    } catch (e) {}
+                    if (d) {
+                        t = d.getElementsByTagName('head')[0] || d.getElementsByTagName('body')[0] || 0;
+                        if (t) {
+                            s = d.createElement('script');
+                            s.type = "text/javascript";
+                            s.src = 'http://ads.adfox.ru/1092/prepareCode?dl=http%3A%2F%2Fwww.kommersant.ru%2Fdoc%2F2973035&lvlfrom=19&p1=btgny&p2=ffyl&pct=a&pd=26&pdh=900&pdw=1440&pfb=a&pfc=a&phid=AdFox_banner_621960&pr=332297&pr1=621960&prr=http%3A%2F%2Fwww.kommersant.ru%2Frubric%2F8&pt=b&puid1=21&puid2=&puid3=0&puid5=100&pv=1&pw=2';
+                            t.appendChild(s);
+                        } else {
+                            (new Image()).src = 'http://ads.adfox.ru/1092/event?rand=ddouguy&p5=dojuk&p1=btgny&pr=sxor&puid1=21&p2=ffyl&puid3=0&puid5=100&lts=etameko&hash=8e6c1a3df2f03e40&pm=bd';
+                        }
+                    } else {
+                        (new Image()).src = 'http://ads.adfox.ru/1092/event?rand=dhvblmh&p5=dojuk&p1=btgny&pr=sxor&puid1=21&p2=ffyl&puid3=0&puid5=100&lts=etameko&hash=51ee27c5f72f2188&pm=bc';
+                    }                     
+                });
+            });
+            t = d.getElementsByTagName("script")[0];
+            s = d.createElement("script");
+            s.type = "text/javascript";
+            s.src = "//an.yandex.ru/system/context.js";
+            s.async = true;
+            t.parentNode.insertBefore(s, t);
+        })(this, this.document, "yandexContextAsyncCallbacks");
+    }
+
+    parent.eval(bannerFunction.toString().replace(/^.*{([\s\S]*)}.*$/mg, '$1'));
+})();
