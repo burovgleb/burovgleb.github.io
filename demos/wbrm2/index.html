@@ -956,8 +956,8 @@
 
                     </div>
 
-                    <iframe id="NR_frame" width="640" height="450" name="nativeroll">
-                    </iframe>
+                    <!--<iframe id="NR_frame" width="640" height="450" name="nativeroll">-->
+                    <!--</iframe>-->
 
                     <!-- RSS Link -->
 
@@ -1735,21 +1735,21 @@
     <img id="advad" src="./index_files/adv.gif" style="display:none">
 
 
+    <!--<script>-->
+        <!--var ifrm = document.getElementById('NR_frame');-->
+        <!--ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;-->
+        <!--ifrm.document.open();-->
+        <!--ifrm.document.write(``);-->
+        <!--ifrm.document.close();-->
+    <!--</script>-->
+    <script src="https://cdn01.nativeroll.tv/js/seedr-player.min.js"></script>
     <script>
-        var ifrm = document.getElementById('NR_frame');
-        ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
-        ifrm.document.open();
-        ifrm.document.write(`<div class="article_text_wrapper"></div>
-                            <script src="https://cdn01.nativeroll.tv/js/seedr-player.min.js"><\/script>
-                            <script>
-                                SeedrPlayer(document.getElementsByClassName('article_text_wrapper')[0], 50, {
-                                    gid: '58b57e775f366ef1398b462f',
-                                    onError: function (e) {
-                                        console.log(e);
-                                    }
-                                });
-                            <\/script>`);
-        ifrm.document.close();
+    SeedrPlayer(document.getElementsByClassName('article_text_wrapper')[0], 50, {
+        gid: '58b57e775f366ef1398b462f',
+        onError: function (e) {
+            console.log(e);
+        }
+    });
     </script>
 
 
