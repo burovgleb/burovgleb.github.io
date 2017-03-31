@@ -1,0 +1,1 @@
+if (621960) { setTimeout(function(){document.close();},100); }
